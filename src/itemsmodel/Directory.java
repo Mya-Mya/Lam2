@@ -37,7 +37,7 @@ public class Directory extends Item {
         this.parent=parent;
 
         String title = this.myDirectory.getName();
-        title = title.equals("items")?"ようこそ":title.replaceAll("^.", "");//todo "items"の安全性
+        title = isTop()?"ようこそ":title.replaceAll("^.", "");//todo "items"の安全性
         this.attrs.put(ProductAttr.Title.toString(), title);
 
         List<Item> itemList = new ArrayList<>();

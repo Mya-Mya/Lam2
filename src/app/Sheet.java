@@ -2,29 +2,43 @@ package app;
 
 import itemsmodel.*;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * 一枚のシート情報及びいくつかのサービスを持ち、{@code view}と{@code itemsmodel}の架け橋となる。
- * シートが持つ情報としてカレントディレクトリ一つが相当する。
- * 通常、アプリケーション内ではこのカレントディレクトリが持つ全てのアイテムが一つの画面に表示される。
+ * 全作品とディレクトリのモデルを持ち、{@code view}と{@code itemsmodel}の架け橋となる。
+ * 画面を構成するデータとサービスを提供する。
  * このインスタンス一つで様々な画面へ遷移することができるため、通常はアプリケーション内で一つだけ生成していればよい。
  * @author Miyaoka
  */
 public class Sheet {
+    protected SheetState state;
+    protected String firstDirectoryPath;
     protected Directory nowDirectory;
     protected List<SheetListener> listeners;
 
     /**
      * 新しいシートを生成する。
-     * @param firstDirectory 初期値として与えるカレントディレクトリ
+     * @param rootDirectoryPath ルートとなるディレクトリを指すファイルパス
      */
-    public Sheet(Directory firstDirectory) {
+    public Sheet(String rootDirectoryPath) {
         listeners=new ArrayList<>();
-        setNowDirectory(firstDirectory);
+        this.firstDirectoryPath =rootDirectoryPath;
+        this.state=SheetState.Unloaded;
+    }
+    /**
+     * ルートディレクトリから読み込みを始めてモデルをすべて構築する。
+     * この処理は時間がかかるため、視覚系クラスの整備が終わった後に実行すべきである。。
+     */
+    public void loadModels(){
+        state=SheetState.Loading;
+        fireListeners();
+        File rootDirectory=new File(firstDirectoryPath);
+        setNowDirectory(new Directory(rootDirectory,null));
+        state=SheetState.Showing;
+        fireListeners();
     }
 
     /**
@@ -101,6 +115,10 @@ public class Sheet {
     protected void fireListeners() {
         if(listeners.isEmpty())return;
         for (SheetListener l : listeners) l.sheetChanged();
+    }
+
+    public SheetState getState(){
+        return state;
     }
 
 }

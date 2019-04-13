@@ -3,6 +3,7 @@ import app.Sheet4Debug;
 import itemsmodel.Directory;
 import itemsmodel.Item;
 import itemsmodel.Product;
+import tool.Lam2Constants;
 import tool.Lam2Tool;
 import view.MainFrame;
 
@@ -20,13 +21,14 @@ public class Main {
     }
 
     public Main() {
-        File rootDirectory = new File(System.getProperty("user.dir") + "/items");
-        Directory root = new Directory(rootDirectory, null);
-        Sheet firstSheet = new Sheet(root);
+        Sheet firstSheet=new Sheet(
+                System.getProperty("user.dir")+"/"+ Lam2Constants.ROOT_PATH
+        );
         new MainFrame("beta03",firstSheet);
+        firstSheet.loadModels();
     }
 
-    public void testCode() {
+    /*public void testCode() {
         File rootDirectory = new File(System.getProperty("user.dir") + "/items");
         Directory root = new Directory(rootDirectory, null);
         Sheet firstSheet = new Sheet(root);
@@ -48,5 +50,5 @@ public class Main {
                 sheet.goInto(new Scanner(System.in).nextInt());
             }
         }
-    }
+    }*/
 }

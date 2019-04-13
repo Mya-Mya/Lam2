@@ -16,37 +16,60 @@ public class SheetContentsView extends JPanel implements SheetListener {
     public SheetContentsView(Sheet firstSheet) {
         this.mySheet = firstSheet;
         this.mySheet.addSheetListener(this);
-        init();
+        initLoadingComponents();
     }
 
-    protected void init() {
+    /**
+     * モデルの読み込みが完了している場合に表示するコンポーネントの整備をする
+     */
+    protected void initShowingComponents() {
         removeAll();
-        JPanel container=new JPanel(new FlowLayout());
+        this.setLayout(new BorderLayout());
+        JPanel container = new JPanel(new FlowLayout());
+        JScrollPane scrollPane = new JScrollPane(
+                container,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
+        );
+        this.add(scrollPane,BorderLayout.CENTER);
+
         List<Item> items = mySheet.getChildList();
         for (Item i : items) {
             switch (i.getKind()) {
                 case DIRECTORY:
-                    container.add(
-                            new DirectoryView((Directory) i)
-                    );
+                    container.add(new DirectoryView((Directory) i));
                     break;
                 case PRODUCT:
-                    container.add(
-                            new ProductView((Product)i)
-                    );
+                    container.add(new ProductView((Product) i));
                     break;
             }
         }
-        JScrollPane scrollPane=new JScrollPane();
-        scrollPane.setViewportView(container);
 
-        this.add(scrollPane);
+        validate();
+    }
+
+    /**
+     * モデルの読み込みがされていない、されている途中に表示する
+     * コンポーネントの整備をする。
+     */
+    protected void initLoadingComponents() {
+        removeAll();
+        add(new JLabel("読み込み中\nこの部分は改良してね"), BorderLayout.CENTER);
         setVisible(true);
+        validate();
     }
 
 
     @Override
     public void sheetChanged() {
-        repaint();
+        switch (mySheet.getState()) {
+            case Unloaded:
+            case Loading:
+                initLoadingComponents();
+                break;
+            case Showing:
+                initShowingComponents();
+                break;
+        }
     }
 }

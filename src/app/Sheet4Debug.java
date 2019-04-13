@@ -13,7 +13,7 @@ import java.util.List;
  * @see app.Sheet
  */
 public class Sheet4Debug extends Sheet {
-    public Sheet4Debug(Directory firstItem) {
+    public Sheet4Debug(String firstItem) {
         super(firstItem);
     }
 
