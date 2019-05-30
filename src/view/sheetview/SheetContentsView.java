@@ -25,7 +25,8 @@ public class SheetContentsView extends JPanel implements SheetListener {
     protected void initShowingComponents() {
         removeAll();
         this.setLayout(new BorderLayout());
-        JPanel container = new JPanel(new FlowLayout());
+        JPanel container = new JPanel(new GridLayout(3,-1));
+
         JScrollPane scrollPane = new JScrollPane(
                 container,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -54,7 +55,7 @@ public class SheetContentsView extends JPanel implements SheetListener {
      */
     protected void initLoadingComponents() {
         removeAll();
-        add(new JLabel("読み込み中\nこの部分は改良してね"), BorderLayout.CENTER);
+        add(new JLabel("読み込み中"), BorderLayout.CENTER);
         setVisible(true);
         validate();
     }

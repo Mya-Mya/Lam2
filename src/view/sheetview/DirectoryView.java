@@ -12,7 +12,7 @@ import java.awt.*;
 public class DirectoryView extends ItemView {
     public DirectoryView(Directory myItem) {
         super(myItem);
-        setPreferredSize(new Dimension(500, 100));
+        //setPreferredSize(new Dimension(500, 100));
 
         GridBagLayout l=new GridBagLayout();
         setLayout(l);

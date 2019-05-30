@@ -8,7 +8,8 @@ import java.awt.*;
 
 public abstract class ItemView extends JPanel {
     public ItemView(Item myItem){
-        setPreferredSize(new Dimension(400,200));
+        setSize(600,400);
+        //setPreferredSize(new Dimension(400,200));
         setBackground(Lam2Constants.white);
     }
 }
