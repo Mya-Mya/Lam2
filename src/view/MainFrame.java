@@ -1,6 +1,7 @@
 package view;
 
 import app.Sheet;
+import tool.Lam2Constants;
 import view.menubarview.MenuBarView;
 import view.sheetview.SheetContentsView;
 
@@ -26,6 +27,8 @@ public class MainFrame extends JFrame implements WindowListener {
         super("Lam2 "+version);
         setLayout(new BorderLayout());
         addWindowListener(this);
+        setPreferredSize(Lam2Constants.wndSize);
+        Lam2Constants.cntSize=getRootPane().getSize();
 
         sheetView = new SheetContentsView(firstSheet);
         add(sheetView,BorderLayout.CENTER);
@@ -33,7 +36,7 @@ public class MainFrame extends JFrame implements WindowListener {
         menuBarView=new MenuBarView(firstSheet);
         add(menuBarView,BorderLayout.NORTH);
 
-        setPreferredSize(new Dimension(800, 600));
+
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         pack();

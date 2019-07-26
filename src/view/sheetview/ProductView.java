@@ -1,5 +1,6 @@
 package view.sheetview;
 
+import app.Sheet;
 import itemsmodel.Item;
 import itemsmodel.Product;
 import itemsmodel.ProductAttr;
@@ -9,8 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ProductView extends ItemView {
-    public ProductView(Product myItem) {
-        super(myItem);
+    public ProductView(Product myItem, Sheet sheet,ItemViewListener listener) {
+        super(myItem,sheet,listener);
 
         ImageIcon imageHandle= (ImageIcon) myItem.getAttr(ProductAttr.Image.toString());
         String titleText= (String) myItem.getAttr(ProductAttr.Title.toString());

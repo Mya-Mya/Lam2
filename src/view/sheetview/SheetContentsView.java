@@ -5,12 +5,13 @@ import app.SheetListener;
 import itemsmodel.Directory;
 import itemsmodel.Item;
 import itemsmodel.Product;
+import tool.Lam2Constants;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class SheetContentsView extends JPanel implements SheetListener {
+public class SheetContentsView extends JPanel implements SheetListener, ItemViewListener {
     private Sheet mySheet;
 
     public SheetContentsView(Sheet firstSheet) {
@@ -25,7 +26,13 @@ public class SheetContentsView extends JPanel implements SheetListener {
     protected void initShowingComponents() {
         removeAll();
         this.setLayout(new BorderLayout());
-        JPanel container = new JPanel(new GridLayout(3,-1));
+        FlowLayout fl=new FlowLayout(FlowLayout.LEFT);
+        fl.setHgap(20);
+        fl.setVgap(20);
+        fl.setAlignOnBaseline(false);
+
+        JPanel container = new JPanel(fl);
+        container.setPreferredSize(new Dimension(Lam2Constants.cntSize.width,0));
 
         JScrollPane scrollPane = new JScrollPane(
                 container,
@@ -38,10 +45,10 @@ public class SheetContentsView extends JPanel implements SheetListener {
         for (Item i : items) {
             switch (i.getKind()) {
                 case DIRECTORY:
-                    container.add(new DirectoryView((Directory) i));
+                    container.add(new DirectoryView((Directory) i,mySheet,this));
                     break;
                 case PRODUCT:
-                    container.add(new ProductView((Product) i));
+                    container.add(new ProductView((Product) i,mySheet,this));
                     break;
             }
         }
@@ -72,5 +79,10 @@ public class SheetContentsView extends JPanel implements SheetListener {
                 initShowingComponents();
                 break;
         }
+    }
+
+    @Override
+    public void itemViewRollChanged() {
+        validate();
     }
 }

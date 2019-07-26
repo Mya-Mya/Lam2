@@ -25,6 +25,7 @@ public class Lam2Tool {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(sb.charAt(0)=='\uFEFF')sb.delete(0,1);
         return sb.toString();
     }
 }
