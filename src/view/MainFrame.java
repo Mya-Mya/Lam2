@@ -2,11 +2,14 @@ package view;
 
 import app.Sheet;
 import tool.Lam2Constants;
+import tool.Lam2UI;
 import view.menubarview.MenuBarView;
 import view.sheetview.SheetContentsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -14,9 +17,10 @@ import java.awt.event.WindowListener;
  * 展示用のメインフレーム。文化祭時にはこのクラスが生成するフレームを常駐させること。
  * @author Miyaoka
  */
-public class MainFrame extends JFrame implements WindowListener {
-    private JPanel sheetView;
-    private JPanel menuBarView;
+public class MainFrame extends JFrame implements WindowListener, KeyListener {
+    private JPanel vSheetContents;
+    private JPanel vMenuBar;
+    private Sheet sheet;
 
     /**
      * メインフレームを生成する。
@@ -25,17 +29,20 @@ public class MainFrame extends JFrame implements WindowListener {
      */
     public MainFrame(String version, Sheet firstSheet) {
         super("Lam2 "+version);
+        this.sheet=firstSheet;
+
         setLayout(new BorderLayout());
         addWindowListener(this);
+        setFocusable(true);
+        addKeyListener(this);
         setPreferredSize(Lam2Constants.wndSize);
         Lam2Constants.cntSize=getRootPane().getSize();
 
-        sheetView = new SheetContentsView(firstSheet);
-        add(sheetView,BorderLayout.CENTER);
+        vSheetContents = new SheetContentsView(firstSheet);
+        add(vSheetContents,BorderLayout.CENTER);
 
-        menuBarView=new MenuBarView(firstSheet);
-        add(menuBarView,BorderLayout.NORTH);
-
+        vMenuBar =new MenuBarView(firstSheet);
+        add(vMenuBar,BorderLayout.NORTH);
 
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -76,6 +83,23 @@ public class MainFrame extends JFrame implements WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()== KeyEvent.VK_ESCAPE) {
+            sheet.loadModels();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }

@@ -9,6 +9,7 @@ import itemsmodel.Item;
 import tool.Lam2UI;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,7 +25,9 @@ public class BreadcrumbsView extends JToolBar
         super();
         this.sheet=sheet;
         sheet.addSheetListener(this);
-
+        Lam2UI.makeUpContainer(this);
+        this.setFloatable(false);
+        setBackground(Lam2UI.gray1);
     }
 
     @Override
@@ -37,6 +40,7 @@ public class BreadcrumbsView extends JToolBar
 
             for(int i=0;i<numParent;i++){
                 JButton button= Lam2UI.getButton();
+                button.setBackground(Lam2UI.gray2);
                 Directory dir=(Directory)parents.get(i);
                 String text=(String)dir.getAttr(DirectoryAttr.Title.toString());
                 String acco=Integer.toString(i);
@@ -46,6 +50,7 @@ public class BreadcrumbsView extends JToolBar
                 button.addActionListener(this);
                 button.setActionCommand(acco);
                 add(button);
+                addSeparator();
             }
         }
         updateUI();

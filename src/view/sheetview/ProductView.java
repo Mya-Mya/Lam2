@@ -10,23 +10,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ProductView extends ItemView {
-    public ProductView(Product myItem, Sheet sheet,ItemViewListener listener) {
-        super(myItem,sheet,listener);
+    public ProductView(Product myItem, Sheet sheet) {
+        super(myItem,sheet);
 
-        ImageIcon imageHandle= (ImageIcon) myItem.getAttr(ProductAttr.Image.toString());
-        String titleText= (String) myItem.getAttr(ProductAttr.Title.toString());
-        String productorText= (String) myItem.getAttr(ProductAttr.Productor.toString());
-        String detailText= (String) myItem.getAttr(ProductAttr.Detail.toString());
+        ImageIcon lImageData= (ImageIcon) myItem.getAttr(ProductAttr.Image.toString());
+        String lTitleData= (String) myItem.getAttr(ProductAttr.Title.toString());
+        String lProducterData= (String) myItem.getAttr(ProductAttr.Productor.toString());
+        String lDetailData= (String) myItem.getAttr(ProductAttr.Detail.toString());
 
-        JLabel image=new JLabel(imageHandle);
-        add(image, BorderLayout.WEST);
+        JLabel lImage=new JLabel(lImageData);
 
-        JLabel title= Lam2UI.getLargeLabel();
-        title.setText(titleText);
-        add(title,BorderLayout.NORTH);
+        JLabel lTitle= Lam2UI.getLargeLabel();
+        lTitle.setText(lTitleData);
 
-        JLabel detail= Lam2UI.getNormalLabel();
-        detail.setText(detailText);
-        add(detail,BorderLayout.CENTER);
+        JLabel lDetail= Lam2UI.getNormalLabel();
+        lDetail.setText(lDetailData);
+
+        add(lImage, BorderLayout.WEST);
+        add(lTitle,BorderLayout.NORTH);
+        add(lDetail,BorderLayout.CENTER);
     }
 }

@@ -13,23 +13,25 @@ import java.awt.event.ActionListener;
 
 public class DirectoryView extends ItemView{
     private ButtonModel bt;
-    public DirectoryView(Directory i, Sheet sheet,ItemViewListener listener) {
-        super(i,sheet,listener);
+    public DirectoryView(Directory i, Sheet sheet) {
+        super(i,sheet);
         setLayout(null);
 
-        ImageIcon icon= (ImageIcon) i.getAttr(DirectoryAttr.Image.toString());
-        JLabel lIcon= new JLabel(icon);
+        ImageIcon lIconData= (ImageIcon) i.getAttr(DirectoryAttr.Image.toString());
+        JLabel lIcon= new JLabel(lIconData);
         lIcon.setBounds(0,0,200,200);
-        add(lIcon);
 
         JLabel lTitle=Lam2UI.getLargeLabel();
         lTitle.setText((String) i.getAttr(DirectoryAttr.Title.toString()));
         lTitle.setBounds(200,0,200,50);
-        add(lTitle);
 
         JLabel lDetail=Lam2UI.getNormalLabel();
         lDetail.setText((String) i.getAttr(DirectoryAttr.Detail.toString()));
         lDetail.setBounds(200,0,200,150);
+
+
+        add(lIcon);
+        add(lTitle);
         add(lDetail);
 
         setBackground(Lam2UI.sakura);
@@ -43,8 +45,7 @@ public class DirectoryView extends ItemView{
             Graphics2D g2=(Graphics2D)g;
             g2.setPaint(Lam2UI.alphaUme);
             g2.fillRect(0,0,400,200);
-        }
-        if(bt.isPressed()){
+        }else if(bt.isPressed()){
             Graphics2D g2=(Graphics2D)g;
             g2.setPaint(Lam2UI.alphaSumire);
             g2.fillRect(0,0,400,200);

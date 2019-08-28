@@ -13,6 +13,7 @@ public class TitleView extends JPanel implements SheetListener {
     public TitleView(Sheet sheet){
         this.sheet=sheet;
         sheet.addSheetListener(this);
+        Lam2UI.makeUpContainer(this);
     }
 
     @Override
